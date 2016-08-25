@@ -1,4 +1,5 @@
-
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /*
 You have a positive number n consisting of digits. You can do at most one operation: Choosing the index of a digit in the number, remove this digit at that index and insert it back to another place in the number.
@@ -29,33 +30,45 @@ public class ToSmallest {
     
     public static long[] smallest(long n) {
         // your code
+    	System.out.println("Original number is :: " + n);
+    	ArrayList<Integer> aList = new ArrayList<Integer>();
+    	int smallestDigitFound = 9;
     	
-        char[] charArray = Long.toString(n).toCharArray();
-        //find lowest number (0-9) in char array
-        int lowestNumberFound = 9;
-        for(char c : charArray)
-        {
-        	if(c-0<=lowestNumberFound)
-        		lowestNumberFound = c-0;
-        	
-        }
-        
-        //find where to put low number -
-        //starting from left to right checking if c is less
-        int indexOfSwap = 0;
-        for(int i = charArray.length-1; i >=0;i--)
-        {
-        	if(lowestNumberFound<(charArray[i]-0))
-        		indexOfSwap = i;
-        }
-        
-        
-        //swap the numbers at indexs
-        char tempStore = charArray[charArray.length-1];
-        charArray[charArray.length-1]=charArray[indexOfSwap];
-        charArray[indexOfSwap] = tempStore;
-        String solution = new String(charArray);
-        System.out.println(solution);
-        return null;
+    	int indexOfSmallestDigitiii = 0;
+    	
+    	int indexOfNumberToBeReplacedjjj =aList.size()-1;
+    	
+    	for(char c : Long.toString(n).toCharArray())
+    	{
+    		aList.add(Character.getNumericValue(c));
+    	}
+    	int counter = 0;
+  
+    	for(int i = aList.size()-1; i>=counter;i--)
+    	{
+    		if(aList.get(i) <=smallestDigitFound)
+    		{
+    			smallestDigitFound = aList.get(i);
+    			indexOfSmallestDigitiii = i;
+    		}
+    		
+    	}
+    	
+    	for(int i = aList.size()-1; i>=0;i--)
+    	{
+    		if(aList.get(i)>=smallestDigitFound)
+    			indexOfNumberToBeReplacedjjj = i;
+    		
+    	}
+    	System.out.println("i  ::" + indexOfSmallestDigitiii);
+    	System.out.println("j  ::" + indexOfNumberToBeReplacedjjj);
+    	int temp = aList.remove(indexOfSmallestDigitiii);
+    	aList.add(indexOfNumberToBeReplacedjjj, temp);
+    	long[] solution = {Long.valueOf(aList.stream().map(Object::toString)
+                .collect(Collectors.joining(""))),indexOfSmallestDigitiii, indexOfNumberToBeReplacedjjj};
+    	System.out.println(solution[0]);
+    	
+    	return solution;
     }
+    
 }
